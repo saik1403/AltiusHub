@@ -1,24 +1,24 @@
 // components/Invoice/InvoiceDetailComponent.js
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
 
 const InvoiceDetails = ({ invoices, saveInvoice, deleteInvoice }) => {
   const history = useNavigate();
   const { id } = useParams();
   const [invoice, setInvoice] = useState({
-    id: '',
-    date: '',
+    id: "",
+    date: "",
     invoiceNumber: 0,
-    customerName: '',
-    billingAddress: '',
-    shippingAddress: '',
-    GSTIN: '',
+    customerName: "",
+    billingAddress: "",
+    shippingAddress: "",
+    GSTIN: "",
     items: [],
     billSundrys: [],
     totalAmount: 0,
   });
 
-  const isNewInvoice = id === '0';
+  const isNewInvoice = id === "0";
 
   useEffect(() => {
     if (!isNewInvoice) {
@@ -58,50 +58,48 @@ const InvoiceDetails = ({ invoices, saveInvoice, deleteInvoice }) => {
         // Update existing invoice
         saveInvoice(invoice);
       }
-      history.push('/invoices');
+      history.push("/invoices");
     }
   };
 
   const handleDelete = () => {
     // Delete the invoice
     deleteInvoice(id);
-    history.push('/invoices');
+    history.push("/invoices");
   };
 
   const validateForm = () => {
-    // Add your form validation logic here
-    // Return true if the form is valid, otherwise false
     return true;
   };
 
   return (
     <div className="max-w-3xl mx-auto mt-8">
-      <h1 className="text-3xl font-bold mb-4">{isNewInvoice ? 'Create Invoice' : 'Edit Invoice'}</h1>
+      <h1 className="text-3xl font-bold mb-4">
+        {isNewInvoice ? "Create Invoice" : "Edit Invoice"}
+      </h1>
 
-      {/* Invoice form goes here */}
       <form>
-        {/* Form fields go here */}
-        {/* Example: */}
         <label className="block text-sm font-medium text-gray-700">Date</label>
         <input
           type="date"
           value={invoice.date}
-          onChange={(e) => handleInputChange('date', e.target.value)}
+          onChange={(e) => handleInputChange("date", e.target.value)}
           className="mt-1 p-2 border rounded-md w-full"
         />
 
-        {/* Invoice Items go here */}
         {invoice.items.map((item, index) => (
           <div key={index} className="mt-4">
-            {/* Item fields go here */}
-            <label className="block text-sm font-medium text-gray-700">Item Name</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Item Name
+            </label>
             <input
               type="text"
               value={item.itemName}
-              onChange={(e) => handleItemChange(index, 'itemName', e.target.value)}
+              onChange={(e) =>
+                handleItemChange(index, "itemName", e.target.value)
+              }
               className="mt-1 p-2 border rounded-md w-full"
             />
-            {/* Add more item fields as needed */}
           </div>
         ))}
 
@@ -113,7 +111,6 @@ const InvoiceDetails = ({ invoices, saveInvoice, deleteInvoice }) => {
           Save
         </button>
 
-        {/* Display Delete button in update mode */}
         {!isNewInvoice && (
           <button
             type="button"
@@ -124,7 +121,10 @@ const InvoiceDetails = ({ invoices, saveInvoice, deleteInvoice }) => {
           </button>
         )}
 
-        <Link to="/invoices" className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 mt-4">
+        <Link
+          to="/invoices"
+          className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 mt-4"
+        >
           Cancel
         </Link>
       </form>
